@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { backend } from "@/constants/config";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import axios from "axios";
 import { Bell, Link, Search } from "lucide-react";
@@ -8,12 +9,13 @@ import React, { useState } from "react";
 import useSWR from "swr";
 
 export default function Comp() {
-	// const fetcher = (url: string) =>
-	// 	fetch(url, { method: "POST" }).then((r) => r.json());
-	// let { data, isLoading } = useSWR(`/user/data/`, fetcher);
-	// if (isLoading) {
-	// 	return <ReloadIcon className="h-4 w-4 animate-spin mx-auto my-60" />;
-	// }
+	const fetcher = (url: string) =>
+		fetch(url, { method: "GET" }).then((r) => r.json());
+	const { data, isLoading } = useSWR(`${backend}/poll`, fetcher);
+	console.log(data);
+	if (isLoading) {
+		return <ReloadIcon className="h-4 w-4 animate-spin mx-auto my-60" />;
+	}
 	return (
 		<div className="max-h-60 bg-[#F7F8FA] flex">
 			<div className="w-full px-10 py-6">
@@ -102,24 +104,22 @@ export default function Comp() {
 								</tr>
 							</thead>
 							<tbody>
-								{Array(20)
-									.fill("")
-									.map((_, index) => (
-										<tr key={index} className="border-b last:border-none">
-											<td className="py-4 flex items-center space-x-4">
-												Kathryn Murphy
-											</td>
-											<td className="py-4">23</td>
-											<td className="py-4 flex items-center gap-3">
-												<span>21,33%</span>
-												<div className=" bg-green-500 w-3 h-3 rounded-sm"></div>
-											</td>
-											<td className="py-4">معلومات</td>
-											<td className="py-4 text-blue-500 cursor-pointer">
-												<a href={`/user/details/${"id"}`}>عرض</a>
-											</td>
-										</tr>
-									))}
+								{data.data.map((item: any) => (
+									<tr key={item.id} className="border-b last:border-none">
+										<td className="py-4 flex items-center space-x-4">
+											{item.title}
+										</td>
+										<td className="py-4">{item.questions.length}</td>
+										<td className="py-4 flex items-center gap-3">
+											<span>21,33%</span>
+											<div className=" bg-green-500 w-3 h-3 rounded-sm"></div>
+										</td>
+										<td className="py-4">{item.description}</td>
+										<td className="py-4 text-blue-500 cursor-pointer">
+											<a href={`/user/details/${item.id}`}>عرض</a>
+										</td>
+									</tr>
+								))}
 							</tbody>
 						</table>
 						<div className="text-center py-4 text-blue-500 cursor-pointer">
