@@ -1,21 +1,91 @@
-import { Pen, Trash } from "lucide-react";
+"use client";
+
+import { usePoll, StateEnum } from "@/hooks/usePoll";
+import { Order } from "../_components/Order";
+import { Thanks, UserData } from "../_components/Info";
+import { Survey } from "../_components/Survey";
+import useSWR from "swr";
+import { backend } from "@/constants/config";
+import { useParams } from "next/navigation";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "@/components/ui/use-toast";
+import axios from "axios";
 
 export default function Poll() {
+	const methods = useForm({});
+	const params = useParams<{ id: string }>();
+	const fetcher = (url: string) =>
+		fetch(url, { method: "GET" }).then((r) => r.json());
+	const { data, isLoading } = useSWR(`${backend}/poll/${params.id}`, fetcher);
+	const { setState, currentState }: any = usePoll();
+	if (isLoading) {
+		return <ReloadIcon className="h-4 w-4 animate-spin mx-auto my-60" />;
+	}
+	const states = [StateEnum.HELLO, StateEnum.SURVEY, StateEnum.THANKS];
+	const renderComponent = () => {
+		switch (currentState) {
+			case StateEnum.HELLO:
+				return <UserData />;
+
+			case StateEnum.SURVEY:
+				return <Survey data={data.data.questions} />;
+			case StateEnum.THANKS:
+				return <Thanks />;
+			default:
+				return <UserData />;
+		}
+	};
+	function getPercentage() {
+		return (states.indexOf(currentState) + 1) * 25;
+	}
+	const handleNextState = () => {
+		const currentIndex = states.indexOf(currentState);
+		const nextIndex = currentIndex + 1;
+		if (nextIndex == states.length - 1) {
+			methods.handleSubmit(async (post_data) => {
+				for (let item of post_data.solve) {
+					item.answerId = Number(item.answerId);
+				}
+				try {
+					const { data } = await axios.post(`${backend}/solve`, post_data);
+					if (data.success) {
+						toast({
+							title: "data is sent !",
+						});
+						setState(states[nextIndex]);
+					}
+				} catch {
+					toast({
+						variant: "destructive",
+						title: "data is not sent",
+					});
+				}
+			})();
+		} else {
+			if (nextIndex < states.length) {
+				setState(states[nextIndex]);
+			}
+		}
+	};
+
 	return (
 		<div className="w-[1024px] h-[700px] bg-white shadow-lg flex">
 			<div className="w-2/6 bg-[url('/assets/bg.jpg')] bg-cover bg-center relative">
 				<div className="absolute flex flex-col gap-4 bottom-16 right-10 text-white text-right z-20">
 					<div>
-						<h2 className="text-4xl font-bold mb-4">تسجيل الدخول</h2>
-						<p className="text-sm ">شرح بسيط</p>
+						<h2 className="text-4xl font-bold mb-4">{data.data.title}</h2>
+						<p className="text-sm ">{data.data.description}</p>
 					</div>
 					<div>
-						<h2 className="text-lg font-bold mb-4">25% تم الاستكمال </h2>
+						<h2 className="text-lg font-bold mb-4">
+							{getPercentage().toString()}% تم الاستكمال{" "}
+						</h2>
 						<div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
 							<div
 								className="bg-[#007b8d] h-2.5 rounded-full"
 								style={{
-									width: "45%",
+									width: `${getPercentage().toString()}%`,
 									marginLeft: "auto",
 									marginRight: "0",
 								}}
@@ -26,108 +96,16 @@ export default function Poll() {
 				<div className="absolute inset-0 bg-black opacity-50 z-10"></div>
 			</div>
 
-			<div className="w-4/6 p-12 flex flex-col ">
-				<Order />
-				<Thanks />
+			<div className="w-4/6 pt-12 flex flex-col justify-between gap-2">
+				<Order percentage={getPercentage()} />
+				<FormProvider {...methods}>{renderComponent()}</FormProvider>
+				<button
+					onClick={handleNextState}
+					className="bg-teal-500 w-full flex items-center justify-center p-5"
+				>
+					التالي
+				</button>
 			</div>
-		</div>
-	);
-}
-
-function Order() {
-	return (
-		<div className="flex items-center justify-between w-full max-w-md mx-auto">
-			<div className="flex items-center">
-				<div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						className="h-5 w-5 text-gray-600"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M4 6h16M4 10h16M4 14h16M4 18h16"
-						/>
-					</svg>
-				</div>
-				<span className="ml-2 text-sm text-gray-600">المعلومات الخاصة بك</span>
-			</div>
-			<div className="flex-grow border-t border-gray-300 mx-4"></div>
-			<div className="flex items-center">
-				<div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						className="h-5 w-5 text-gray-600"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-						/>
-					</svg>
-				</div>
-				<span className="ml-2 text-sm ">الأسئلة</span>
-			</div>
-			<div className="flex-grow border-t border-gray-300 mx-4"></div>
-			<div className="flex items-center">
-				<div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						className="h-5 w-5 text-gray-600"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-						/>
-					</svg>
-				</div>
-				<span className="ml-2 text-sm text-gray-600">الموافقة</span>
-			</div>
-		</div>
-	);
-}
-function UserData() {
-	return <div></div>;
-}
-
-function Questions() {
-	<div className="flex flex-col py-4 gap-4">
-		<div className="border-b border-gray-200 gap-4 flex justify-between pb-4">
-			<button className="text-teal-500 ml-4">
-				<Pen />
-			</button>
-			<button className="text-red-500">
-				<Trash />
-			</button>
-			<div className="ml-auto text-lg font-bold">السؤال</div>
-		</div>
-		<div
-			className="flex items-center gap-6 space-x-4 space-x-reverse ml-10"
-			dir="rtl"
-		>
-			{/* <Radio /> */}
-		</div>
-	</div>;
-}
-
-function Thanks() {
-	return (
-		<div className="flex flex-col justify-center items-center my-40 gap-4">
-			<h1 className="text-9xl font-bold ">👍</h1>
-			<h1 className="text-4xl font-bold text-[#007b8d]">تم الانتهاء</h1>
 		</div>
 	);
 }
