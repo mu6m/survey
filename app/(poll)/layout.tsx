@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 const font = Cairo({ subsets: ["arabic"] });
 
 export const metadata: Metadata = {
-	title: "استطلاع ادارة",
+	title: "تسجيل استطلاع",
 };
 
 export default function RootLayout({

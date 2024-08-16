@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import axios from "axios";
-import { Bell, Link, Search } from "lucide-react";
+import { Bell, Link, Pen, Search, Trash } from "lucide-react";
 import React, { useState } from "react";
 import useSWR from "swr";
 
@@ -42,42 +42,6 @@ export default function Comp() {
 					</div>
 				</header>
 
-				<div className="grid grid-cols-3 gap-4 mb-6" dir="rtl">
-					<div className="bg-[#E0E7FF] rounded-xl p-6 text-[#353535] flex flex-col justify-between">
-						<div className="flex justify-between items-center">
-							<h3 className="text-xl font-semibold">عدد المشاركين</h3>
-							<i className="fas fa-users text-lg"></i>
-						</div>
-						<div>
-							<p className="mt-4">23344</p>
-							<span className="text-sm mt-2">التاريخ</span>
-						</div>
-					</div>
-					<div className="bg-[#353535] rounded-xl p-6 text-white flex flex-col justify-between">
-						<div className="flex justify-between items-center">
-							<h3 className="text-xl font-semibold">
-								عدد الاستطلاعات المنتهية
-							</h3>
-							<i className="fas fa-clipboard-list text-lg"></i>
-						</div>
-						<div>
-							<p className="mt-4">23344</p>
-							<span className="text-sm mt-2">التاريخ</span>
-						</div>
-					</div>
-
-					<div className="bg-[#0694A2] rounded-xl p-6 text-white flex flex-col justify-between">
-						<div className="flex justify-between items-center">
-							<h3 className="text-xl font-semibold">نسبة النتائج</h3>
-							<i className="fas fa-chart-line text-lg"></i>
-						</div>
-						<div>
-							<p className="mt-4">زيادة أسبوعية 10%</p>
-							<span className="text-sm mt-2">التاريخ</span>
-						</div>
-					</div>
-				</div>
-
 				<div className="bg-white rounded-xl shadow-sm p-6">
 					<div className="flex space-x-4 mb-6">
 						<a
@@ -90,7 +54,7 @@ export default function Comp() {
 							تحرير إكسل
 						</button>
 					</div>
-					<div className="max-h-[270px] overflow-y-auto">
+					<div className="max-h-[450px] overflow-y-auto">
 						<table className="w-full text-right " dir="rtl">
 							<thead>
 								<tr className="text-gray-500">
@@ -99,6 +63,7 @@ export default function Comp() {
 									<th className="py-2">النتائج</th>
 									<th className="py-2">وصف بسيط</th>
 									<th className="py-2">تفاصيل</th>
+									<th className="py-2">الاجراء</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -117,6 +82,14 @@ export default function Comp() {
 											<td className="py-4">معلومات</td>
 											<td className="py-4 text-blue-500 cursor-pointer">
 												<a href={`/user/details/${"id"}`}>عرض</a>
+											</td>
+											<td className="py-4 flex gap-2 items-center ">
+												<button className="text-teal-500">
+													<Pen className="h-4" />
+												</button>
+												<button className="text-red-500">
+													<Trash className="h-4" />
+												</button>
 											</td>
 										</tr>
 									))}
