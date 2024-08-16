@@ -4,33 +4,39 @@ import { backend } from "@/constants/config";
 import axios from "axios";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Field } from "./_component/Items";
+import { Field } from "../_component/Items";
 
-export default function Question() {
-	const methods = useForm({});
-	const [items, setItems]: any = useState([]);
+export default function Form({ server_data }: any) {
+	const methods = useForm({
+		defaultValues: server_data,
+	});
+	const [items, setItems]: any = useState(
+		Array(server_data.questions?.length || 0).fill("")
+	);
 	const [loading, setLoading]: any = useState(false);
 
 	return (
 		<div className="w-[800px] mx-auto ">
 			<form
-				onSubmit={methods.handleSubmit(async (data) => {
+				onSubmit={methods.handleSubmit(async (data: any) => {
 					setLoading(true);
 					data.questions.length = items.length;
 					try {
-						const request = await axios.post(`${backend}/poll`, {
-							title: data.title,
-							description: data.title,
-							questions: data.questions,
-						});
+						const request = await axios.put(
+							`${backend}/poll/${server_data.id}`,
+							{
+								title: data.title,
+								description: data.title,
+								questions: data.questions,
+							}
+						);
 						console.log(request);
 						if (!request.data.success) {
 							throw new Error("server error");
 						}
 						toast({
-							title: "data is saved !",
+							title: "data is updated !",
 						});
-						setItems([]);
 					} catch {
 						toast({
 							variant: "destructive",

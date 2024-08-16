@@ -1,4 +1,3 @@
-import { Field, Radio } from "@/components/main/Items";
 import { Pen, Trash } from "lucide-react";
 
 export default function Poll() {
@@ -29,7 +28,7 @@ export default function Poll() {
 
 			<div className="w-4/6 p-12 flex flex-col ">
 				<Order />
-				<Field />
+				<Thanks />
 			</div>
 		</div>
 	);
@@ -119,15 +118,15 @@ function Questions() {
 			className="flex items-center gap-6 space-x-4 space-x-reverse ml-10"
 			dir="rtl"
 		>
-			<Radio />
+			{/* <Radio /> */}
 		</div>
 	</div>;
 }
 
 function Thanks() {
 	return (
-		<div>
-			<h1 className="text-7xl font-bold ">👍</h1>
+		<div className="flex flex-col justify-center items-center my-40 gap-4">
+			<h1 className="text-9xl font-bold ">👍</h1>
 			<h1 className="text-4xl font-bold text-[#007b8d]">تم الانتهاء</h1>
 		</div>
 	);
