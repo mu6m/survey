@@ -11,7 +11,7 @@ export function Field({ edit, index, setItems }: any) {
 		<div className="flex flex-col py-4 gap-4">
 			<div className="border-b border-gray-200 gap-4 flex justify-between pb-4">
 				<button
-					className="text-teal-500 ml-4"
+					className="text-[#007b8d] ml-4"
 					onClick={() => {
 						setEdit(!editAble);
 					}}
@@ -53,7 +53,7 @@ export function Field({ edit, index, setItems }: any) {
 								value={methods.getValues(
 									`questions.${index}.text.${optionIndex}`
 								)}
-								className="form-radio h-5 w-5 text-teal-500"
+								className="form-radio h-5 w-5 text-[#007b8d]"
 							/>
 							<div className="flex flex-col gap-4">
 								<input

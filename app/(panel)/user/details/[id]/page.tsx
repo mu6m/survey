@@ -93,7 +93,7 @@ export default function Comp() {
 								<td className="py-4 flex gap-2 items-center ">
 									<a
 										href={`/user/question/${params.id}`}
-										className="text-teal-500"
+										className="text-[#007b8d]"
 									>
 										<Pen className="h-4" />
 									</a>

@@ -101,7 +101,7 @@ export default function Poll() {
 				<FormProvider {...methods}>{renderComponent()}</FormProvider>
 				<button
 					onClick={handleNextState}
-					className="bg-teal-500 w-full flex items-center justify-center p-5"
+					className="bg-[#007b8d] w-full flex items-center justify-center p-5"
 				>
 					التالي
 				</button>

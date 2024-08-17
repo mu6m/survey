@@ -11,7 +11,7 @@ export function UserData() {
 						{...methods.register(`name`)}
 						type="text"
 						placeholder="الإسم"
-						className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+						className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007b8d]"
 					/>
 				</div>
 				<div className="col-span-2">
@@ -19,7 +19,7 @@ export function UserData() {
 						{...methods.register(`email`)}
 						type="email"
 						placeholder="البريد الإلكتروني"
-						className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+						className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007b8d]"
 					/>
 				</div>
 				<div className="col-span-2">
@@ -59,7 +59,7 @@ export function UserData() {
 						{...methods.register(`teaching`)}
 						type="text"
 						placeholder="التعليم"
-						className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+						className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007b8d]"
 					/>
 				</div>
 				<div className="col-span-1">
@@ -67,7 +67,7 @@ export function UserData() {
 						{...methods.register(`date_of_birth`)}
 						type="date"
 						placeholder="تاريخ ولادة"
-						className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+						className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007b8d]"
 					/>
 				</div>
 				<div className="col-span-2">
@@ -75,7 +75,7 @@ export function UserData() {
 						{...methods.register(`address`)}
 						type="text"
 						placeholder="عنوان السكن"
-						className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+						className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007b8d]"
 					/>
 				</div>
 				<div className="col-span-2">

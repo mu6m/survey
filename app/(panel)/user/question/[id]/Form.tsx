@@ -74,7 +74,7 @@ export default function Form({ server_data }: any) {
 					<div className="flex justify-end mt-6">
 						<button
 							type="submit"
-							className="bg-teal-500 text-white py-2 px-4 rounded"
+							className="bg-[#007b8d] text-white py-2 px-4 rounded"
 							disabled={loading}
 						>
 							حفظ الاسئلة
@@ -85,7 +85,7 @@ export default function Form({ server_data }: any) {
 					<button
 						type="button"
 						onClick={() => setItems((prevState: any) => [...prevState, ""])}
-						className="bg-teal-500 text-white py-2 px-4 rounded"
+						className="bg-[#007b8d] text-white py-2 px-4 rounded"
 						disabled={loading}
 					>
 						إضافة سؤال جديد

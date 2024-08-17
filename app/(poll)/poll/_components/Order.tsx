@@ -20,8 +20,8 @@ export function Order({ percentage }: any) {
 				</div>
 				<span
 					className={`ml-2 text-sm font-bold text-${
-						percentage == 25 ? "teal" : "gray"
-					}-600`}
+						percentage == 25 ? "[#007b8d]" : "[#2f3146]"
+					}`}
 				>
 					المعلومات الخاصة بك
 				</span>
@@ -46,7 +46,7 @@ export function Order({ percentage }: any) {
 				</div>
 				<span
 					className={`ml-2 text-sm font-bold text-${
-						percentage == 50 ? "teal" : "gray"
+						percentage == 50 ? "[#007b8d]" : "[#2f3146]"
 					}-600`}
 				>
 					الأسئلة
@@ -72,8 +72,8 @@ export function Order({ percentage }: any) {
 				</div>
 				<span
 					className={`ml-2 text-sm font-bold text-${
-						percentage == 75 ? "teal" : "gray"
-					}-600`}
+						percentage == 75 ? "[#007b8d]" : "[#2f3146]"
+					}`}
 				>
 					الموافقة
 				</span>

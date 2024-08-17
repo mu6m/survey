@@ -4,7 +4,7 @@ export function Survey({ data }: any) {
 	const methods = useFormContext();
 
 	return (
-		<form className="flex flex-col py-4 gap-4">
+		<form className="flex flex-col p-8 gap-4">
 			{data.map((item: any, index: number) => {
 				return (
 					<>

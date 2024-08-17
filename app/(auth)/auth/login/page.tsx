@@ -94,7 +94,7 @@ export default function Login() {
 
 						<button
 							type="submit"
-							className="w-full bg-teal-600 text-white py-3 rounded-lg text-lg font-bold hover:bg-teal-700 transition duration-300"
+							className="w-full bg-[#007b8d] text-white py-3 rounded-lg text-lg font-bold hover:bg-teal-700 transition duration-300"
 							disabled={loading}
 						>
 							{loading ? "..." : "تسجيل دخول"}
@@ -105,7 +105,7 @@ export default function Login() {
 				<div className="mt-8 text-center">
 					<p className="text-sm text-gray-500">
 						ليس لديك حساب ؟
-						<a href="#" className="text-teal-600 font-semibold">
+						<a href="#" className="text-[#007b8d] font-semibold">
 							تواصل معنا
 						</a>
 					</p>
